@@ -1,8 +1,16 @@
 package org.example;
-import java.sql.SQLOutput;
+
 import java.util.*;
 
 public class Main {
+
+    public static double getTotalCost(ArrayList<Service> serviceArrayList){
+        double finalCost = 0;
+        for (int i = 0; i <= (serviceArrayList.size()-1) ; i++) {
+            finalCost += serviceArrayList.get(i).getCost();
+        }
+        return finalCost;
+    }
 
     public static void displayService(){
         System.out.println();
@@ -64,11 +72,12 @@ public class Main {
                     //add to service class
                     //System.out.println("Service added to patient bill.");
                     break;
-
                 case 3:
                     System.out.print("Insurance type (hmo/cash/senior): ");
-                    inInsurance = sc.nextLine();
-                    System.out.println("Original cost: "); // add base cost calculation
+                    String insuranceType = sc.nextLine();
+
+
+                    System.out.println("Original cost: "+getTotalCost()); // add base cost calculation
                     System.out.println("Discounted cost: ");// add discount calculation
                     //System.out.println("Bill generated successfully!");
 
