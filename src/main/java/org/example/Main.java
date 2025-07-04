@@ -1,4 +1,5 @@
 package org.example;
+import java.security.Provider;
 import java.sql.SQLOutput;
 import java.util.*;
 
@@ -10,6 +11,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc =  new Scanner(System.in);
         List<Patient> registeredPatients = new ArrayList<>();
+        List<Service> availedServices = new ArrayList<>();
+        ServiceFactory createService = new ServiceFactory();
+
         System.out.println("=== Hospital Billing System ===");
         System.out.println("1. Register Patient");
         System.out.println("2. Add Service");
@@ -61,8 +65,13 @@ public class Main {
                     System.out.println("Consultation (700)");
                     System.out.print("Select service to add: ");
                     inService = sc.nextLine();
-                    //add to service class
-                    //System.out.println("Service added to patient bill.");
+                    Service newService = createService.getService(inService);
+                    if (newService == null){
+                        System.out.println("Invalid service type, please try again");
+                        break;
+                    }
+                    availedServices.add(newService);
+                    System.out.println("Service added to patient bill: " + availedServices.getLast().getName() + "(" + availedServices.getLast().getCost() + ")");
                     break;
 
                 case 3:
@@ -71,7 +80,6 @@ public class Main {
                     System.out.println("Original cost: "); // add base cost calculation
                     System.out.println("Discounted cost: ");// add discount calculation
                     //System.out.println("Bill generated successfully!");
-
                 case 4:
                     System.out.println("Thank you! Get well soon!");
             }
