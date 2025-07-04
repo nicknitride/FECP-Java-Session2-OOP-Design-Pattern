@@ -1,22 +1,19 @@
 # Lab 3: Java OOP Capstone
 
 ## Authors: Paolo Flores, Jaime Manalo, Nicholo Pardines
+This is a Hospital Billing System designed to print a bill for a registered customer. Users can register their account for their bill, add hospital services, specify discounts, and print their current bill. Services supported for billing include: XRays, Surgeries, and Consultations. Discounts supported are senior discounts (8%) and HMO coverage discounts (75%). The program was designed with both factory and strategy design patterns.
+#### Billing  (Strategy Pattern)
+#### Services (Factory Pattern)
 
-- Brief description here
 ## Output Screenshots:
-- Idea: One Full Run
+![run1](https://github.com/nicknitride/FECP-Java-Session2-OOP-Design-Pattern/blob/main/run%201.png)
+![run2](https://github.com/nicknitride/FECP-Java-Session2-OOP-Design-Pattern/blob/main/run%202.png)
+![rereg](https://github.com/nicknitride/FECP-Java-Session2-OOP-Design-Pattern/blob/main/rereg.png)
+
 ### Project Structure
 ![tree sc1](https://github.com/nicknitride/FECP-Java-Session2-OOP-Design-Pattern/blob/main/tree1.png)
 ![tree sc2](https://github.com/nicknitride/FECP-Java-Session2-OOP-Design-Pattern/blob/main/tree2.png)
 
-### Billing  (Strategy Pattern)
-#### Discounts 
-1. Senior `(amount*0.8)`
-2. HMO `(amount*0.75)-100`
-3. Cash/None `amount`
-
 #### Test Coverage
 ![test cov](https://github.com/nicknitride/FECP-Java-Session2-OOP-Design-Pattern/blob/main/TestCov.png)
 
-### Services (Factory Pattern)
-#### Test Coverage
