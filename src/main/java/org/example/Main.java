@@ -4,6 +4,10 @@ import java.util.*;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+
+    public static void displayService(){
+        System.out.println();
+    }
     public static void main(String[] args) {
         Scanner sc =  new Scanner(System.in);
         System.out.println("=== Hospital Billing System ===");
@@ -20,7 +24,7 @@ public class Main {
 
 
         while(inChoice != 4){
-            System.out.println("Enter choice: ");
+            System.out.print("Enter choice: ");
             inChoice = sc.nextInt();
             sc.nextLine();
 
@@ -37,7 +41,9 @@ public class Main {
 
                 case 2:
                     System.out.println("Available Services: ");
-                    // display services offered
+                    System.out.println("XRay (500)");
+                    System.out.println("Surgery (12000)");
+                    System.out.println("Consultation (700)");
                     System.out.print("Select service to add: ");
                     inService = sc.nextLine();
                     //add to service class
