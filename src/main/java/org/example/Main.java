@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Main {
 
-    public static double getTotalCost(ArrayList<Service> serviceArrayList){
+    public static double getTotalCost(List<Service> serviceArrayList){
         double finalCost = 0;
         for (int i = 0; i <= (serviceArrayList.size()-1) ; i++) {
             finalCost += serviceArrayList.get(i).getCost();
@@ -11,14 +11,20 @@ public class Main {
         return finalCost;
     }
 
-    public static void displayService(){
-        System.out.println();
+    static void getServicesAvailed(List<Service> serviceArrayList){
+        System.out.println("----------- Service Availed Summary -------------");
+        for (int i = 0; i <= (serviceArrayList.size()-1) ; i++) {
+            System.out.println("Service "+i+": "+serviceArrayList.get(i).getName());
+            System.out.println("Cost: "+serviceArrayList.get(i).getCost());
+        }
+        System.out.println("-------------------------------------------");
     }
     public static void main(String[] args) {
         Scanner sc =  new Scanner(System.in);
         List<Patient> registeredPatients = new ArrayList<>();
         List<Service> availedServices = new ArrayList<>();
         ServiceFactory createService = new ServiceFactory();
+        BillingStrategy billingStrategy;
 
         System.out.println("=== Hospital Billing System ===");
         System.out.println("1. Register Patient");
@@ -80,13 +86,33 @@ public class Main {
                     System.out.println("Service added to patient bill: " + availedServices.getLast().getName() + "(" + availedServices.getLast().getCost() + ")");
                     break;
                 case 3:
-                    System.out.print("Insurance type (hmo/cash/senior): ");
+                    System.out.println("----------Insurance/Discount Types----------");
+                    System.out.println("1. HMO");
+                    System.out.println("1. Cash/None");
+                    System.out.println("1. Senior");
+                    System.out.print("Enter discount type (1-3): ");
                     String insuranceType = sc.nextLine();
-
-
-                    System.out.println("Original cost: "+getTotalCost()); // add base cost calculation
-                    System.out.println("Discounted cost: ");// add discount calculation
-                    //System.out.println("Bill generated successfully!");
+                    double discountedBill = 0;
+                    if (insuranceType.equals("1")){
+                        System.out.println("Selected HMO.");
+                        billingStrategy = new HmoPayment();
+                        discountedBill = billingStrategy.calculateDiscountedBill(getTotalCost(availedServices));
+                    } else if (insuranceType.equals("2")) {
+                        System.out.println("Selected Cash.");
+                        billingStrategy = new BasePayment();
+                        discountedBill = billingStrategy.calculateDiscountedBill(getTotalCost(availedServices));
+                    } else if (insuranceType.equals("3")) {
+                        System.out.println("Selected Senior Discount.");
+                        billingStrategy = new SeniorPayment();
+                        discountedBill = billingStrategy.calculateDiscountedBill(getTotalCost(availedServices));
+                    }
+                    System.out.println("\n\n-------------Final Bill-------------");
+                    getServicesAvailed(availedServices);
+                    System.out.println("Original cost: "+getTotalCost(availedServices)); // add base cost calculation
+                    System.out.println("Discounted cost: "+discountedBill);// add discount calculation
+                    System.out.println("--------------------------");
+                    System.out.println("BILL PRINTED, THANK YOU.");
+                    inChoice = 4;
                 case 4:
                     System.out.println("Thank you! Get well soon!");
             }
