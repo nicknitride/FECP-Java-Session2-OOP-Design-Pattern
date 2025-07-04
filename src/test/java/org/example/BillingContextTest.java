@@ -23,7 +23,6 @@ class BillingContextTest {
         billContext.setBillStrategy(new BasePayment());
         double actual = billContext.calculateFinalBill(testBillAmount);
         Assertions.assertEquals((testBillAmount),actual);
-
     }
     @Test
     void testSeniorPayment(){
