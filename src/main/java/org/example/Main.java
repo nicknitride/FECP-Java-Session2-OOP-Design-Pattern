@@ -1,8 +1,7 @@
 package org.example;
+import java.sql.SQLOutput;
 import java.util.*;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
     public static void displayService(){
@@ -10,6 +9,7 @@ public class Main {
     }
     public static void main(String[] args) {
         Scanner sc =  new Scanner(System.in);
+        List<Patient> registeredPatients = new ArrayList<>();
         System.out.println("=== Hospital Billing System ===");
         System.out.println("1. Register Patient");
         System.out.println("2. Add Service");
@@ -31,12 +31,27 @@ public class Main {
             switch (inChoice){
                 case 1:
                     System.out.print("Enter Patient Name: ");
-                    inName = sc.nextLine();
-                    System.out.print("Enter Patient ID: ");
-                    inID = sc.nextInt();
-                    sc.next();
+                    String patientName = sc.nextLine();
+                    //System.out.print("Enter Patient ID: ");
+                    //inID = sc.nextInt();
+                    //sc.next();
                     //instantiate patient class
                     //System.out.print("Patient Registered!");
+                    System.out.print("Enter Date of Birth (YYYY-MM-DD): ");
+                    String dob = sc.nextLine(); //dob = date of birth
+                    System.out.print("Sex: ");
+                    String gender = sc.nextLine();
+                    System.out.print("Enter email (optional): ");
+                    String email = sc.nextLine();
+                    if (email.isEmpty()){
+                        email = null;
+                    }
+
+                    Patient newPatient = new Patient(patientName, dob, gender, email);
+                    registeredPatients.add(newPatient);
+
+                    System.out.println("Patient Registered!");
+                    System.out.println("Patient ID: " + newPatient.getPatientID());
                     break;
 
                 case 2:
@@ -59,7 +74,6 @@ public class Main {
 
                 case 4:
                     System.out.println("Thank you! Get well soon!");
-
             }
         }
     }
