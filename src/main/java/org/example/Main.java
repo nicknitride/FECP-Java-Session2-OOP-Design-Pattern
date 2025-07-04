@@ -20,11 +20,12 @@ public class Main {
         System.out.println("-------------------------------------------");
     }
     public static void main(String[] args) {
+        Patient newPatient = null;
         Scanner sc =  new Scanner(System.in);
-        List<Patient> registeredPatients = new ArrayList<>();
         List<Service> availedServices = new ArrayList<>();
         ServiceFactory createService = new ServiceFactory();
         BillingStrategy billingStrategy;
+        String patientName = "";
 
         System.out.println("=== Hospital Billing System ===");
         System.out.println("1. Register Patient");
@@ -47,12 +48,7 @@ public class Main {
             switch (inChoice){
                 case 1:
                     System.out.print("Enter Patient Name: ");
-                    String patientName = sc.nextLine();
-                    //System.out.print("Enter Patient ID: ");
-                    //inID = sc.nextInt();
-                    //sc.next();
-                    //instantiate patient class
-                    //System.out.print("Patient Registered!");
+                    patientName = sc.nextLine();
                     System.out.print("Enter Date of Birth (YYYY-MM-DD): ");
                     String dob = sc.nextLine(); //dob = date of birth
                     System.out.print("Sex: ");
@@ -62,15 +58,16 @@ public class Main {
                     if (email.isEmpty()){
                         email = null;
                     }
-
-                    Patient newPatient = new Patient(patientName, dob, gender, email);
-                    registeredPatients.add(newPatient);
-
+                    newPatient = new Patient(patientName, dob, gender, email);
                     System.out.println("Patient Registered!");
                     System.out.println("Patient ID: " + newPatient.getPatientID());
                     break;
 
                 case 2:
+                    if(newPatient==null){
+                        System.out.println("Error, no patient tied to bill.");
+                        break;
+                    }
                     System.out.println("Available Services: ");
                     System.out.println("XRay (500)");
                     System.out.println("Surgery (12000)");
@@ -86,10 +83,17 @@ public class Main {
                     System.out.println("Service added to patient bill: " + availedServices.getLast().getName() + "(" + availedServices.getLast().getCost() + ")");
                     break;
                 case 3:
+                    if(newPatient==null){
+                        System.out.println("Error, no patient tied to bill.");
+                        break;
+                    } else if (availedServices.isEmpty()) {
+                        System.out.println("Error, no services availed.");
+                        break;
+                    }
                     System.out.println("----------Insurance/Discount Types----------");
                     System.out.println("1. HMO");
-                    System.out.println("1. Cash/None");
-                    System.out.println("1. Senior");
+                    System.out.println("2. Cash/None");
+                    System.out.println("3. Senior");
                     System.out.print("Enter discount type (1-3): ");
                     String insuranceType = sc.nextLine();
                     double discountedBill = 0;
@@ -106,12 +110,13 @@ public class Main {
                         billingStrategy = new SeniorPayment();
                         discountedBill = billingStrategy.calculateDiscountedBill(getTotalCost(availedServices));
                     }
-                    System.out.println("\n\n-------------Final Bill-------------");
+                    System.out.println("\n\n-------------Final Bill for ("+(patientName)+")-------------");
+                    System.out.println("Patent ID: "+newPatient.getPatientID());
                     getServicesAvailed(availedServices);
                     System.out.println("Original cost: "+getTotalCost(availedServices)); // add base cost calculation
                     System.out.println("Discounted cost: "+discountedBill);// add discount calculation
                     System.out.println("--------------------------");
-                    System.out.println("BILL PRINTED, THANK YOU.");
+                    System.out.println("BILL PRINTED");
                     inChoice = 4;
                 case 4:
                     System.out.println("Thank you! Get well soon!");

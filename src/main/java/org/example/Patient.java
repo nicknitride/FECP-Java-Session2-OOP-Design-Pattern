@@ -22,27 +22,33 @@ public class Patient {
         this.patientEmail = patientEmail;
     }
 
-    private String generatePatientID(){
+    private String generatePatientID() {
         int randomNumber = random.nextInt(100_000_000);
         return String.format("%08d", randomNumber);
         //return UUID.randomUUID().toString();
     }
-    public String getPatientID(){
+
+    public String getPatientID() {
         return patientId;
     }
-    public String getName(){
+
+    public String getName() {
         return patientName;
     }
-    public Date getRegistrationDate(){
+
+    public Date getRegistrationDate() {
         return registrationDate;
     }
-    public String getBirthday(){
+
+    public String getBirthday() {
         return dateOfBirth;
     }
-    public String getGender(){
+
+    public String getGender() {
         return patientGender;
     }
-    public String getEmail(){
+
+    public String getEmail() {
         return patientEmail;
     }
 }
