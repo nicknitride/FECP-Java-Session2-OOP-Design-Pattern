@@ -42,10 +42,8 @@ public class Main {
 
 
         String inChoice = "";
-        String inName = null;
-        int inID = 0;
         String inService = null;
-        String inInsurance = null;
+
 
 
         while(!inChoice.equals("4")){
