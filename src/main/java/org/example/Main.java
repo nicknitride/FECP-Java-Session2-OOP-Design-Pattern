@@ -56,16 +56,21 @@ public class Main {
                     if(newPatient == null){
                         System.out.print("Enter Patient Name: ");
                         patientName = sc.nextLine();
-                        System.out.print("Enter Date of Birth (YYYY-MM-DD): ");
-                        String dob = sc.nextLine(); //dob = date of birth
-                        System.out.print("Sex: ");
-                        String gender = sc.nextLine();
-                        System.out.print("Enter email (optional): ");
-                        String email = sc.nextLine();
-                        if (email.isEmpty()){
-                            email = null;
+                        String gender;
+                        while(true){
+                            System.out.print("Sex (Male/Female): ");
+                            gender = sc.nextLine().toUpperCase().trim();
+                            if(gender.isEmpty()){
+                                System.out.println("Sex cannot be empty.");
+                                continue;
+                            }
+                            if(gender.equals("MALE") || gender.equals("FEMALE")){
+                                break;
+                            }else{
+                                System.out.println("Invalid gender. Please enter 'Male' or 'Female'.");
+                            }
                         }
-                        newPatient = new Patient(patientName, dob, gender, email);
+                        newPatient = new Patient(patientName, gender);
                         System.out.println("Patient Registered!");
                         System.out.println("Patient ID: " + newPatient.getPatientID());
                         break;
