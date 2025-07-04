@@ -10,11 +10,24 @@ public class Main {
         }
         return finalCost;
     }
+    static void displayMenu(){
+        System.out.println("\n=== Hospital Billing System ===");
+        System.out.println("1. Register Patient");
+        System.out.println("2. Add Service");
+        System.out.println("3. Compute Bill");
+        System.out.println("4. Exit");
+    }
+
+    static void clearAllDetails(Patient patient, List<Service> serviceList){
+        serviceList.clear();
+        patient = null;
+        System.out.println("User and bill data cleared. Please register a new patient");
+    }
 
     static void getServicesAvailed(List<Service> serviceArrayList){
         System.out.println("----------- Service Availed Summary -------------");
         for (int i = 0; i <= (serviceArrayList.size()-1) ; i++) {
-            System.out.println("Service "+i+": "+serviceArrayList.get(i).getName());
+            System.out.println("Service "+(i+1)+": "+serviceArrayList.get(i).getName());
             System.out.println("Cost: "+serviceArrayList.get(i).getCost());
         }
         System.out.println("-------------------------------------------");
@@ -27,43 +40,47 @@ public class Main {
         BillingStrategy billingStrategy;
         String patientName = "";
 
-        System.out.println("=== Hospital Billing System ===");
-        System.out.println("1. Register Patient");
-        System.out.println("2. Add Service");
-        System.out.println("3. Compute Bill");
-        System.out.println("4. Exit");
 
-        int inChoice = 0;
+        String inChoice = "";
         String inName = null;
         int inID = 0;
         String inService = null;
         String inInsurance = null;
 
 
-        while(inChoice != 4){
+        while(!inChoice.equals("4")){
+            displayMenu();
             System.out.print("Enter choice: ");
-            inChoice = sc.nextInt();
-            sc.nextLine();
+            inChoice = sc.nextLine();
 
             switch (inChoice){
-                case 1:
-                    System.out.print("Enter Patient Name: ");
-                    patientName = sc.nextLine();
-                    System.out.print("Enter Date of Birth (YYYY-MM-DD): ");
-                    String dob = sc.nextLine(); //dob = date of birth
-                    System.out.print("Sex: ");
-                    String gender = sc.nextLine();
-                    System.out.print("Enter email (optional): ");
-                    String email = sc.nextLine();
-                    if (email.isEmpty()){
-                        email = null;
+                case "1":
+                    if(newPatient == null){
+                        System.out.print("Enter Patient Name: ");
+                        patientName = sc.nextLine();
+                        System.out.print("Enter Date of Birth (YYYY-MM-DD): ");
+                        String dob = sc.nextLine(); //dob = date of birth
+                        System.out.print("Sex: ");
+                        String gender = sc.nextLine();
+                        System.out.print("Enter email (optional): ");
+                        String email = sc.nextLine();
+                        if (email.isEmpty()){
+                            email = null;
+                        }
+                        newPatient = new Patient(patientName, dob, gender, email);
+                        System.out.println("Patient Registered!");
+                        System.out.println("Patient ID: " + newPatient.getPatientID());
+                        break;
+                    }else{
+                        System.out.println("Error bill already tied to patient ID no: "+newPatient.getPatientID());
+                        System.out.println("Would you like to clear this billing and start over? (y/n): ");
+                        String innerChoice = sc.nextLine().toLowerCase();
+                        if (innerChoice.equals("y")){
+                            clearAllDetails(newPatient,availedServices);
+                        }
+                        break;
                     }
-                    newPatient = new Patient(patientName, dob, gender, email);
-                    System.out.println("Patient Registered!");
-                    System.out.println("Patient ID: " + newPatient.getPatientID());
-                    break;
-
-                case 2:
+                case "2":
                     if(newPatient==null){
                         System.out.println("Error, no patient tied to bill.");
                         break;
@@ -81,8 +98,9 @@ public class Main {
                     }
                     availedServices.add(newService);
                     System.out.println("Service added to patient bill: " + availedServices.getLast().getName() + "(" + availedServices.getLast().getCost() + ")");
+                    getServicesAvailed(availedServices);
                     break;
-                case 3:
+                case "3":
                     if(newPatient==null){
                         System.out.println("Error, no patient tied to bill.");
                         break;
@@ -118,10 +136,11 @@ public class Main {
                     System.out.println("Original cost: "+getTotalCost(availedServices)); // add base cost calculation
                     System.out.println("Discounted cost: "+discountedBill);// add discount calculation
                     System.out.println("--------------------------");
-                    System.out.println("BILL PRINTED");
-                    inChoice = 4;
-                case 4:
+                    System.out.println("BILL PRINTED. Thank you!");
+                    break;
+                case "4":
                     System.out.println("Thank you! Get well soon!");
+                    break;
                 default:
                     System.out.println("Invalid input. Enter a number between (1-4)");
             }
