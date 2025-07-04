@@ -109,6 +109,8 @@ public class Main {
                         System.out.println("Selected Senior Discount.");
                         billingStrategy = new SeniorPayment();
                         discountedBill = billingStrategy.calculateDiscountedBill(getTotalCost(availedServices));
+                    }else{
+                        System.out.println("Please input a number between 1-3");
                     }
                     System.out.println("\n\n-------------Final Bill for ("+(patientName)+")-------------");
                     System.out.println("Patent ID: "+newPatient.getPatientID());
@@ -120,6 +122,8 @@ public class Main {
                     inChoice = 4;
                 case 4:
                     System.out.println("Thank you! Get well soon!");
+                default:
+                    System.out.println("Invalid input. Enter a number between (1-4)");
             }
         }
     }
