@@ -16,6 +16,7 @@
 3. Cash/None `amount`
 
 #### Test Coverage
+![test cov](https://github.com/nicknitride/FECP-Java-Session2-OOP-Design-Pattern/blob/main/TestCov.png)
 
 ### Services (Factory Pattern)
 #### Test Coverage
